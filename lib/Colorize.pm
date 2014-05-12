@@ -62,16 +62,37 @@ print color_code_for("frobinizeer");
 my %num_for;
 my $inc = 55;
 my $first = 73;
-# These look pretty good.  This should be configurable.
+# These look pretty good.  This should be configurable, however.
 
 my $cur_num;
 $cur_num = $first - 16 - $inc;
 # 16 is the magic number, sorry.  That's where the 6x6x6 color cube begins.
 
 sub __next_code {
-    $cur_num += $inc;
-    $cur_num %= 216;
+    do {
+        $cur_num += $inc;
+        $cur_num %= 216;
+    } while (__brightness($cur_num) < 0.08);
     return $cur_num + 16;
+}
+
+
+sub __brightness {
+    my $fg = shift;
+    # Turn into rgb coordinates (assuming we're in a 6x6x6 cube -- except
+    # really more like 7x7x7 because we jump from 0 to 2, basically)
+    my ($r, $g, $b);
+    foreach ($b, $g, $r) {
+        $_ = $fg % 6;
+        $fg = int($fg / 6);
+
+    # Then normalize to a 1x1x1 cube.
+        $_++ if $_;
+        $_ /= 7;
+    }
+    # Return the brightness. Cribbed from the "HSL and HSV" wikipedia page.
+    my $Y_709 = 0.21*$r + 0.72*$g + 0.07*$b;
+    return $Y_709;
 }
 
 sub color_code_for {
