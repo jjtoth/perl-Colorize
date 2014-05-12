@@ -1,0 +1,8 @@
+Makefile
+META.yml
+MYMETA.*
+~$
+\.sw.$
+/#.*#$
+blib
+pm_to_blib

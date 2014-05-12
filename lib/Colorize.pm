@@ -4,24 +4,20 @@ use warnings;
 use strict;
 use Carp;
 
-use version; $VERSION = qv('0.0.3');
+use version; 
+our $VERSION = qv('0.0.3');
 
-# Other recommended modules (uncomment to use):
-#  use IO::Prompt;
-#  use Perl6::Export;
-#  use Perl6::Slurp;
-#  use Perl6::Say;
-
-
-# Module implementation here
+require Exporter;
+our @ISA = qw(Exporter);
+our @EXPORT = qw(colorize); ## no critic -- since this module only exists for this.
+our @EXPORT_OK = qw(color_code_for);
 
 
-1; # Magic true value required at end of module
-__END__
+my $reset = "\e[m";
 
 =head1 NAME
 
-Colorize - [One line description of module's purpose here]
+Colorize - Colorize things uniquely.
 
 
 =head1 VERSION
@@ -33,18 +29,88 @@ This document describes Colorize version 0.0.1
 
     use Colorize;
 
-=for author to fill in:
-    Brief code example(s) here showing commonest usage(s).
-    This section will be as far as many users bother reading
-    so make it as educational and exeplary as possible.
-  
-  
+    print "Not " . colorize("invented") . " here.";
+
+
+=head2 colorize
+
+print for map { colorize($_) . " " }
+    qw(This isn't a good example but it's an example anyway);
+
+    Gives each word its own color (so the two "example"'s will be give the same color
+
+colorize("relevant","everything here");
+
+    Colorizes "everything here" as above, but uses "relevant" for its code.
+
+=cut
+
+sub colorize {
+    @_ = (@_,@_) if @_ == 1;
+    return color_code_for($_[0]) . $_[1] . $reset;
+}
+
+=head2 color_code_for
+    
+use Colorize qw(color_code_for);
+print color_code_for("frobinizeer");
+
+    Returns the ANSI code we've assigned to "thing".
+
+=cut
+
+my %num_for;
+my $inc = 55;
+my $first = 73;
+# These look pretty good.  This should be configurable.
+
+my $cur_num;
+$cur_num = $first - 16 - $inc;
+# 16 is the magic number, sorry.  That's where the 6x6x6 color cube begins.
+
+sub __next_code {
+    $cur_num += $inc;
+    $cur_num %= 216;
+    return $cur_num + 16;
+}
+
+sub color_code_for {
+    my ($thing) = @_;
+    return "\e[38;5;" .
+        ($num_for{$thing} ||= __next_code)
+        . "m";
+}
+
+ 
+
+1; # Magic true value required at end of module
+__END__
+
 =head1 DESCRIPTION
 
 =for author to fill in:
     Write a full description of the module and its features here.
     Use subsections (=head2, =head3) as appropriate.
 
+
+=head1 EXAMPLE
+
+    use Colorize "c";   # Itsy bitsy alias.  Not actually in existence...
+
+    # Initialize so that we always have the same few things have the same
+    # colors every time.
+
+    colorize($_) for qw(noun verb adj);
+
+    say 
+        c(qw(noun Here)),
+        c(qw(verb is)),
+        c(qw(adj a)),
+        c(qw(adj bad)),
+        c(qw(noun example));
+
+=cut
+  
 
 =head1 INTERFACE 
 

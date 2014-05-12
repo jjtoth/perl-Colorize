@@ -1,19 +1,35 @@
 Colorize version 0.0.1
 
-[ REPLACE THIS...
+Colorize is intended to give colorization without worrying about what the
+colors *ought* to be.
 
-  The README is used to introduce the module and provide instructions on
-  how to install the module, any machine dependencies it may have (for
-  example C compilers and installed libraries) and any other information
-  that should be understood before the module is installed.
+Example:
 
-  A README file is required for CPAN modules since CPAN extracts the
-  README file from a module distribution so that people browsing the
-  archive can use it get an idea of the modules uses. It is usually a
-  good idea to provide version information here so that people can
-  decide whether fixes for the module are worth downloading.
-]
+    use Colorize;
 
+    print for map { colorize($_) . " " } 
+        qw(This isn't a good example but it's an example anyway);
+    print "\n"
+
+will print all the words in their own color (so the two "example"'s will be
+given the same color).
+
+We assume that you have a terminal that supports 256 colors.  That said, after
+assigning 208 colors, we start back at the begining.
+
+At present, we 
+
+    colorize("thing");
+
+Gives "thing" it's own unique color and surrounds it with the proper ANSI
+codes.
+
+    colorize("relevant","everything here");
+
+Colorizes "everything here" based on the unique color for "relevant".
+
+color_code_for("thing")
+    Returns the ANSI code we've assigned to "thing".
 
 INSTALLATION
 

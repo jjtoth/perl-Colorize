@@ -3,8 +3,10 @@ Changes
 lib/Colorize.pm
 Makefile.PL
 MANIFEST			This list of files
+MANIFEST.SKIP			Things to skip
 README
 t/00.load.t
+t/01.colorfor.t
 t/perlcritic.t
 t/pod-coverage.t
 t/pod.t
