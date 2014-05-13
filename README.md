@@ -1,4 +1,8 @@
-Colorize version 0.0.1
+perl-Colorize
+=============
+
+Perl module for (semi-randomly) colorizing strings
+
 
 Colorize is intended to give colorization without worrying about what the
 colors "ought" to be.  Use Term::ANSIColors for that.
