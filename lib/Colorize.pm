@@ -4,12 +4,12 @@ use warnings;
 use strict;
 use Carp;
 
-use version; 
-our $VERSION = qv('0.0.3');
+use version;
+our $VERSION = qv('0.0.4');
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(colorize); ## no critic -- since this module only exists for this.
+our @EXPORT = qw(colorize); ## no critic -- [since this module only exists for this.]
 our @EXPORT_OK = qw(color_code_for);
 
 
@@ -51,7 +51,7 @@ sub colorize {
 }
 
 =head2 color_code_for
-    
+
 use Colorize qw(color_code_for);
 print color_code_for("frobinizeer");
 
@@ -62,7 +62,8 @@ print color_code_for("frobinizeer");
 my %num_for;
 my $inc = 55;
 my $first = 73;
-# These look pretty good.  This should be configurable, however.
+# These look pretty good both solarized and non.  This should be configurable,
+# however.
 
 my $cur_num;
 $cur_num = $first - 16 - $inc;
@@ -72,7 +73,11 @@ sub __next_code {
     do {
         $cur_num += $inc;
         $cur_num %= 216;
-    } while (__brightness($cur_num) < 0.08);
+    } while (
+        ($ENV{SOLARIZED} and __brightness($cur_num) > 0.6 )
+        or
+        (! $ENV{SOLARIZED} and __brightness($cur_num) < 0.08)
+    );
     return $cur_num + 16;
 }
 
@@ -102,7 +107,7 @@ sub color_code_for {
         . "m";
 }
 
- 
+
 
 1; # Magic true value required at end of module
 __END__
@@ -123,7 +128,7 @@ __END__
 
     colorize($_) for qw(noun verb adj);
 
-    say 
+    say
         c(qw(noun Here)),
         c(qw(verb is)),
         c(qw(adj a)),
@@ -131,9 +136,9 @@ __END__
         c(qw(noun example));
 
 =cut
-  
 
-=head1 INTERFACE 
+
+=head1 INTERFACE
 
 =for author to fill in:
     Write a separate section listing the public components of the modules
@@ -173,8 +178,11 @@ __END__
     files, and the meaning of any environment variables or properties
     that can be set. These descriptions must also include details of any
     configuration language used.
-  
-Colorize requires no configuration files or environment variables.
+
+Colorize requires no configuration files.
+
+If an environment variable called SOLARIZED exists (and is truthy -- e.g., "1"),
+then we assume we have a bright background and will choose colors for that.
 
 
 =head1 DEPENDENCIES

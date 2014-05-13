@@ -3,13 +3,18 @@
 use strict;
 use warnings;
 
-use 5.10.0;
+use 5.10.0;     # For //
 
 use Test::Most;
 use Test::NoWarnings "had_no_warnings";
 
 use Colorize;
 use Colorize qw(color_code_for);
+
+# Make sure we're not using solarized.
+BEGIN {
+    undef $ENV{SOLARIZED};
+}
 
 my @codes = map { color_code_for($_) // "" } qw(0 1 2 3 4 5 0);
 
@@ -51,6 +56,15 @@ ok(! $seen{"\e[38;5;16m"},
 ok(! $seen{"\e[38;5;17m"},
     "We don't include dark blue (when we're not solarized)"
 );
+
+my @bright = qw(196 46 226 51 231);
+
+foreach (@bright) {
+    ok($seen{"\e[38;5;${_}m"},
+        "We include color $_ when we're not solarized"
+    );
+}
+
 
 
 $Test::NoWarnings::do_end_test = 0;

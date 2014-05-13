@@ -10,3 +10,4 @@ t/01.colorfor.t
 t/perlcritic.t
 t/pod-coverage.t
 t/pod.t
+t/02.solarized.t
