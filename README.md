@@ -22,8 +22,6 @@ We assume that you have a terminal that supports 256 colors.  That said, after
 assigning 200ish colors, we start back at the begining.  (Using different
 backgrounds is a future feature).
 
-At present, we
-
     colorized("thing");
 
 Gives "thing" it's own unique color and surrounds it with the proper ANSI
@@ -33,8 +31,9 @@ codes.
 
 Colorizes "everything here" based on the unique color for "relevant".
 
-color_code_for("thing")
-    Returns the ANSI code we've assigned to "thing".
+    color_code_for("thing")
+
+Returns the ANSI code we've assigned to "thing".
 
 INSTALLATION
 
