@@ -4,7 +4,7 @@ use Module::Build;
 
 my $builder = Module::Build->new(
     module_name         => 'Colorize',
-    license             => 'VCU',
+    license             => 'artistic',
     dist_author         => 'Jim Toth <jjtoth@vcu.edu>',
     dist_version_from   => 'lib/Colorize.pm',
     requires => {
