@@ -6,8 +6,9 @@ MANIFEST			This list of files
 MANIFEST.SKIP			Things to skip
 README
 t/00.load.t
-t/01.colorfor.t
+t/01.colorized.t
+t/02.colorfor.t
+t/03.solarized.t
 t/perlcritic.t
 t/pod-coverage.t
 t/pod.t
-t/02.solarized.t

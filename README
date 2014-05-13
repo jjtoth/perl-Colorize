@@ -1,7 +1,7 @@
 Colorize version 0.0.1
 
 Colorize is intended to give colorization without worrying about what the
-colors *ought* to be.
+colors "ought" to be.  Use Term::ANSIColors for that.
 
 Example:
 
@@ -15,9 +15,10 @@ will print all the words in their own color (so the two "example"'s will be
 given the same color).
 
 We assume that you have a terminal that supports 256 colors.  That said, after
-assigning 208 colors, we start back at the begining.
+assigning 200ish colors, we start back at the begining.  (Using different
+backgrounds is a future feature).
 
-At present, we 
+At present, we
 
     colorize("thing");
 

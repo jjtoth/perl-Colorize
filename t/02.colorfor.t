@@ -8,7 +8,6 @@ use 5.10.0;     # For //
 use Test::Most;
 use Test::NoWarnings "had_no_warnings";
 
-use Colorize;
 use Colorize qw(color_code_for);
 
 # Make sure we're not using solarized.
@@ -31,10 +30,10 @@ isnt($codes[0],$codes[1],
     "Codes for different things are different"
 );
 
-is(colorize(0), "$codes[0]0\e[m",
+is(Colorize::colorize(0), "$codes[0]0\e[m",
     "colorize() subroutine works as expected for one argument"
 );
-is(colorize(0, "Hi there!"), "$codes[0]Hi there!\e[m",
+is(Colorize::colorize(0, "Hi there!"), "$codes[0]Hi there!\e[m",
     "colorize() subroutine works as expected for two arguments"
 );
 
