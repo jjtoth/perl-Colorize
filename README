@@ -7,7 +7,7 @@ Example:
 
     use Colorize;
 
-    print for map { colorize($_) . " " } 
+    print for map { colorized($_) . " " }
         qw(This isn't a good example but it's an example anyway);
     print "\n"
 
@@ -20,12 +20,12 @@ backgrounds is a future feature).
 
 At present, we
 
-    colorize("thing");
+    colorized("thing");
 
 Gives "thing" it's own unique color and surrounds it with the proper ANSI
 codes.
 
-    colorize("relevant","everything here");
+    colorized("relevant","everything here");
 
 Colorizes "everything here" based on the unique color for "relevant".
 

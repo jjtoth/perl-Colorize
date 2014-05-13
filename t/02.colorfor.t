@@ -30,11 +30,11 @@ isnt($codes[0],$codes[1],
     "Codes for different things are different"
 );
 
-is(Colorize::colorize(0), "$codes[0]0\e[m",
-    "colorize() subroutine works as expected for one argument"
+is(Colorize::colorized(0), "$codes[0]0\e[m",
+    "colorized() subroutine works as expected for one argument"
 );
-is(Colorize::colorize(0, "Hi there!"), "$codes[0]Hi there!\e[m",
-    "colorize() subroutine works as expected for two arguments"
+is(Colorize::colorized(0, "Hi there!"), "$codes[0]Hi there!\e[m",
+    "colorized() subroutine works as expected for two arguments"
 );
 
 my %seen;

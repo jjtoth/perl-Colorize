@@ -9,7 +9,7 @@ our $VERSION = qv('0.0.4');
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(colorize); ## no critic -- [since this module only exists for this.]
+our @EXPORT = qw(colorized); ## no critic -- [since this module only exists for this.]
 our @EXPORT_OK = qw(color_code_for);
 
 
@@ -29,23 +29,23 @@ This document describes Colorize version 0.0.1
 
     use Colorize;
 
-    print "Not " . colorize("invented") . " here.";
+    print "Not " . colorized("invented") . " here.";
 
 
-=head2 colorize
+=head2 colorized
 
-print for map { colorize($_) . " " }
+print for map { colorized($_) . " " }
     qw(This isn't a good example but it's an example anyway);
 
     Gives each word its own color (so the two "example"'s will be give the same color
 
-colorize("relevant","everything here");
+colorized("relevant","everything here");
 
     Colorizes "everything here" as above, but uses "relevant" for its code.
 
 =cut
 
-sub colorize {
+sub colorized {
     @_ = (@_,@_) if @_ == 1;
     return color_code_for($_[0]) . $_[1] . $reset;
 }
@@ -126,7 +126,7 @@ __END__
     # Initialize so that we always have the same few things have the same
     # colors every time.
 
-    colorize($_) for qw(noun verb adj);
+    colorized($_) for qw(noun verb adj);
 
     say
         c(qw(noun Here)),
