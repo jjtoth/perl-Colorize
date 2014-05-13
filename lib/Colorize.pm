@@ -5,11 +5,11 @@ use strict;
 use Carp;
 
 use version;
-our $VERSION = qv('0.0.4');
+our $VERSION = qv('0.0.5');
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(colorized); ## no critic -- [since this module only exists for this.]
+our @EXPORT = qw(colorized); ## no critic -- [Since this module only exists for this.]
 our @EXPORT_OK = qw(color_code_for);
 
 
@@ -22,7 +22,7 @@ Colorize - Colorize things uniquely.
 
 =head1 VERSION
 
-This document describes Colorize version 0.0.1
+This document describes Colorize version 0.0.5
 
 
 =head1 SYNOPSIS
@@ -82,6 +82,8 @@ sub __next_code {
 }
 
 
+# Returns the approximate brightness, assuming we're using the current HDTV
+# standard. Cribbed from the "HSL and HSV" wikipedia page.
 sub __brightness {
     my $fg = shift;
     # Turn into rgb coordinates (assuming we're in a 6x6x6 cube -- except
@@ -95,7 +97,6 @@ sub __brightness {
         $_++ if $_;
         $_ /= 7;
     }
-    # Return the brightness. Cribbed from the "HSL and HSV" wikipedia page.
     my $Y_709 = 0.21*$r + 0.72*$g + 0.07*$b;
     return $Y_709;
 }
