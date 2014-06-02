@@ -14,6 +14,7 @@ BEGIN {
 }
 
 my @codes = map { color_code_for($_) } qw(0 1 2 3 4 5 0);
+for (@codes) { $_ = "" unless defined }
 
 foreach (@codes) {
     like($_, qr/^\e\[38;5;\d+m$/,
