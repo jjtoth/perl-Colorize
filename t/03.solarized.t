@@ -3,8 +3,6 @@
 use strict;
 use warnings;
 
-use 5.10.0;
-
 use Test::Most;
 use Test::NoWarnings "had_no_warnings";
 

@@ -3,8 +3,6 @@
 use strict;
 use warnings;
 
-use 5.10.0;     # For //
-
 use Test::Most;
 use Test::NoWarnings "had_no_warnings";
 
@@ -15,7 +13,7 @@ BEGIN {
     undef $ENV{SOLARIZED};
 }
 
-my @codes = map { color_code_for($_) // "" } qw(0 1 2 3 4 5 0);
+my @codes = map { color_code_for($_) } qw(0 1 2 3 4 5 0);
 
 foreach (@codes) {
     like($_, qr/^\e\[38;5;\d+m$/,
