@@ -9,7 +9,7 @@ WriteMakefile(
     ABSTRACT_FROM       => 'lib/Colorize.pm',
     PL_FILES            => {},
     PREREQ_PM => {
-        'Test::More' => 0,
+        'Test::More' => 0.88,   # for "done_testing"
         'version'    => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
