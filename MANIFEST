@@ -1,10 +1,11 @@
 Build.PL
 Changes
 lib/Colorize.pm
+LICENSE
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP			Things to skip
-README
+README.md
 t/00.load.t
 t/01.colorized.t
 t/02.colorfor.t
