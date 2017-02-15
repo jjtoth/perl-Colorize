@@ -3,8 +3,11 @@
 use strict;
 use warnings;
 
-use Test::Most;
-use Test::NoWarnings "had_no_warnings";
+use Test::More;
+eval {
+    require Test::NoWarnings;
+};
+my $have_test_nowarnings = ! $@;
 
 # Make it solarized:
 BEGIN {
@@ -33,7 +36,9 @@ foreach (@too_darn_bright) {
 }
 
 
-
-$Test::NoWarnings::do_end_test = 0;
-had_no_warnings;
+if ($have_test_nowarnings) {
+    no warnings "once";
+    $Test::NoWarnings::do_end_test = 0;
+    Test::NoWarnings::had_no_warnings();
+}
 done_testing;
