@@ -21,7 +21,7 @@ Colorize - Colorize things uniquely.
 
 =head1 VERSION
 
-This document describes Colorize version 0.0.6
+This document describes Colorize version 0.0.7
 
 
 =head1 SYNOPSIS
