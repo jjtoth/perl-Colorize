@@ -9,7 +9,7 @@ eval {
 };
 my $have_test_nowarnings = ! $@;
 
-use Colorize qw(color_code_for set_code_for set_escape_code_for);
+use Colorize qw(colorized color_code_for set_code_for set_escape_code_for);
 
 # Make sure we're not using solarized.
 BEGIN {
@@ -78,14 +78,34 @@ is($@, "",
     "We can indeed send in weird characters in set_escape_code_for"
 );
 
+my $one = "one";
+my $fg = "38;5;48";
+set_code_for($one, $fg);
+is (color_code_for($one), "\e[${fg}m",
+    "Color code setting works for foreground"
+);
+is(color_code_for($reallybad), $evil,
+    "Using set_escape_code_for sets the code"
+);
+is(colorized($reallybad), "${evil}${reallybad}\e[m",
+    "Using colorized with what we set_escape_code_for is as expected"
+);
+
+
+# Example out of the docs:
+my $gray_on_magenta = '48;5;128;38;5;232';
+my $what = "This is gray on magenta or some such";
+set_code_for(
+    $what,
+    $gray_on_magenta,
+);
+is(colorized($what), "\e[${gray_on_magenta}m$what\e[m",
+    qq{"$what" is colored gray on magenta (or such)}
+);
 
 TODO: {
     local $TODO = "We don't actually do these yet";
-    is(color_code_for($reallybad), $evil,
-        "Using set_escape_code_for sets the code"
-    );
 }
-
 
 
 if ($have_test_nowarnings) {
