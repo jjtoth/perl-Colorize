@@ -49,13 +49,17 @@ sub colorized {
     return color_code_for($_[0]) . $_[1] . $reset;
 }
 
-=head2 color_code_for,set_code_for,set_escape_code_for
+=head2 color_code_for
 
 use Colorize qw(color_code_for set_code_for set_escape_code_for);
 print color_code_for("frobinizeer");
 
     Returns the ANSI code we've assigned to "frobinizeer", setting it if it
     doesn't already exist.
+
+=head2 set_code_for,set_escape_code_for
+
+    Added in Colorize .007
 
 my $what = "This is gray on magenta or some such";
 set_code_for(
