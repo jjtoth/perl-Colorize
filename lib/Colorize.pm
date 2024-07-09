@@ -5,13 +5,12 @@ use strict;
 use Carp;
 
 use version;
-our $VERSION = qv('0.0.6');
+our $VERSION = qv('0.0.7');
 
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = qw(colorized); ## no critic -- [Since this module only exists for this.]
-our @EXPORT_OK = qw(color_code_for);
-
+our @EXPORT_OK = qw(color_code_for set_code_for set_escape_code_for);
 
 my $reset = "\e[m";
 
@@ -52,10 +51,30 @@ sub colorized {
 
 =head2 color_code_for
 
-use Colorize qw(color_code_for);
+use Colorize qw(color_code_for set_code_for set_escape_code_for);
 print color_code_for("frobinizeer");
 
-    Returns the ANSI code we've assigned to "thing".
+    Returns the ANSI code we've assigned to "frobinizeer", setting it if it
+    doesn't already exist.
+
+=head2 set_code_for,set_escape_code_for
+
+    Added in Colorize .007
+
+my $what = "This is gray on magenta or some such";
+set_code_for(
+    $what,
+    "48;5;128;38;5;232",
+);
+
+    Sets the ANSI code for $what.  Must be color parameters only
+
+set_escape_code_for(
+    $what,
+    "\e[48;5;128;38;5;232m",
+);
+
+    Same thing, but takes the escape codes excplicitly.
 
 =cut
 
@@ -78,7 +97,7 @@ sub __next_code {
         or
         (! $ENV{SOLARIZED} and __brightness($cur_num) < 0.08)
     );
-    return $cur_num + 16;
+    return "\e[38;5;" .  ($cur_num + 16) . "m";
 }
 
 
@@ -101,14 +120,24 @@ sub __brightness {
     return $Y_709;
 }
 
-sub color_code_for {
-    my ($thing) = @_;
-    return "\e[38;5;" .
-        ($num_for{$thing} ||= __next_code)
-        . "m";
+sub set_code_for {
+    my ($thing, $code) = @_;
+    croak "Cannot use escape codes with set_code_for"
+        unless $code =~ /^[0-9;]+$/;
+    set_escape_code_for($thing,"\e[${code}m");
+    return;
 }
 
+sub set_escape_code_for {
+    my ($thing, $code) = @_;
+    $num_for{$thing} = $code;
+    return;
+}
 
+sub color_code_for {
+    my ($thing) = @_;
+    return $num_for{$thing} ||= __next_code;
+}
 
 1; # Magic true value required at end of module
 __END__
