@@ -9,7 +9,7 @@ eval {
 };
 my $have_test_nowarnings = ! $@;
 
-use Colorize qw(color_code_for);
+use Colorize qw(color_code_for set_code_for set_escape_code_for);
 
 # Make sure we're not using solarized.
 BEGIN {
@@ -63,6 +63,26 @@ my @bright = qw(196 46 226 51 231);
 foreach (@bright) {
     ok($seen{"\e[38;5;${_}m"},
         "We include color $_ when we're not solarized"
+    );
+}
+
+eval { set_code_for("bad","\e[we are bad") };
+like($@, qr/Cannot use/,
+    "We cannot send in weird characters to set_code_for"
+);
+
+my ($reallybad, $evil)  = ("really bad","\e[10Cwe are evil");
+
+eval { set_escape_code_for($reallybad, $evil) };
+is($@, "",
+    "We can indeed send in weird characters in set_escape_code_for"
+);
+
+
+TODO: {
+    local $TODO = "We don't actually do these yet";
+    is(color_code_for($reallybad), $evil,
+        "Using set_escape_code_for sets the code"
     );
 }
 
