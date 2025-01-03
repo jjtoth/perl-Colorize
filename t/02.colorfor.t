@@ -1,6 +1,6 @@
 #!/usr/local/bin/perl
 
-use strict;
+use v5.12;
 use warnings;
 
 use Test::More;
@@ -9,20 +9,23 @@ eval {
 };
 my $have_test_nowarnings = ! $@;
 
-use Colorize qw(colorized color_code_for set_code_for set_escape_code_for);
+use Colorize qw(0.0.8 :all);
 
 # Make sure we're not using solarized.
 BEGIN {
     undef $ENV{SOLARIZED};
 }
 
-my @codes = map { color_code_for($_) } qw(0 1 2 3 4 5 0);
+my @things = qw(0 1 2 3 4 5 0);
+my @codes = map { color_code_for($_) } @things;
 for (@codes) { $_ = "" unless defined }
 
 foreach (@codes) {
+    state $i = 0;
     like($_, qr/^\e\[38;5;\d+m$/,
-        "Color for $_ is as expected\e[m"
+        "Color for thing number $i ($things[$i])$_ is as expected\e[m"
     );
+    $i++;
 };
 
 is($codes[0],$codes[-1],
