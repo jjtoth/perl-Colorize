@@ -9,7 +9,7 @@ eval {
 };
 my $have_test_nowarnings = ! $@;
 
-use Colorize qw(:all);
+use Colorize qw(0.0.8 :all);
 
 # Make sure we're not using solarized.
 BEGIN {

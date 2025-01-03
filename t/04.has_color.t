@@ -9,7 +9,7 @@ eval {
 };
 my $have_test_nowarnings = ! $@;
 
-use Colorize qw(colorized has_color color_code_for);
+use Colorize qw(0.0.8 colorized has_color color_code_for);
 
 ok ! has_color("Frob"), "Frob doesn't have a color yet";
 ok ! has_color("Frob"), "Frob still doesn't have a color";
