@@ -10,7 +10,7 @@ our $VERSION = qv('0.0.8');
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = qw(colorized); ## no critic -- [Since this module only exists for this.]
-our @EXPORT_OK = qw(color_code_for set_code_for set_escape_code_for colorized);
+our @EXPORT_OK = qw(color_code_for set_code_for set_escape_code_for colorized has_color);
 our %EXPORT_TAGS;
 
 push @{$EXPORT_TAGS{all}}, @EXPORT_OK;
@@ -52,7 +52,7 @@ sub colorized {
     return color_code_for($_[0]) . $_[1] . $reset;
 }
 
-=head2 color_code_for
+=head2 color_code_for,has_color
 
 use Colorize qw(color_code_for set_code_for set_escape_code_for);
 # or just
@@ -61,6 +61,14 @@ print color_code_for("frobinizeer");
 
     Returns the ANSI code we've assigned to "frobinizeer", setting it if it
     doesn't already exist.
+
+if (! has_color("foo")) {
+    say "we haven't colorized foo yet";
+}
+
+    Tests if something is colored *without* adding a colorization to it if it
+    doesn't have one.  (But the truthy value it returns if there is one is the
+    assigned color code).
 
 =head2 set_code_for,set_escape_code_for
 
@@ -143,6 +151,12 @@ sub set_escape_code_for {
 sub color_code_for {
     my ($thing) = @_;
     return $num_for{$thing} ||= __next_code;
+}
+
+sub has_color {
+    my ($thing) = @_;
+    return unless $num_for{$thing};
+    return color_code_for($thing);
 }
 
 1; # Magic true value required at end of module
