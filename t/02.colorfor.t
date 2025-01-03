@@ -9,7 +9,7 @@ eval {
 };
 my $have_test_nowarnings = ! $@;
 
-use Colorize qw(colorized color_code_for set_code_for set_escape_code_for);
+use Colorize qw(:all);
 
 # Make sure we're not using solarized.
 BEGIN {

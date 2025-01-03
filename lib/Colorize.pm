@@ -5,12 +5,15 @@ use strict;
 use Carp;
 
 use version;
-our $VERSION = qv('0.0.7');
+our $VERSION = qv('0.0.8');
 
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = qw(colorized); ## no critic -- [Since this module only exists for this.]
-our @EXPORT_OK = qw(color_code_for set_code_for set_escape_code_for);
+our @EXPORT_OK = qw(color_code_for set_code_for set_escape_code_for colorized);
+our %EXPORT_TAGS;
+
+push @{$EXPORT_TAGS{all}}, @EXPORT_OK;
 
 my $reset = "\e[m";
 
@@ -52,6 +55,8 @@ sub colorized {
 =head2 color_code_for
 
 use Colorize qw(color_code_for set_code_for set_escape_code_for);
+# or just
+# use Colorize qw(:all);
 print color_code_for("frobinizeer");
 
     Returns the ANSI code we've assigned to "frobinizeer", setting it if it
@@ -59,7 +64,7 @@ print color_code_for("frobinizeer");
 
 =head2 set_code_for,set_escape_code_for
 
-    Added in Colorize .007
+    Added in Colorize .007.  Must be imported explicitly (or with "use Colorize qw(:all);")
 
 my $what = "This is gray on magenta or some such";
 set_code_for(
@@ -74,7 +79,8 @@ set_escape_code_for(
     "\e[48;5;128;38;5;232m",
 );
 
-    Same thing, but takes the escape codes excplicitly.
+    Same thing, but takes the escape codes explicitly.
+
 
 =cut
 
